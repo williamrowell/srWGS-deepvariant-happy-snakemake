@@ -14,3 +14,6 @@ deepvariant_postprocess_variants:
   extra: '--constraint=avx512'
 deepvariant_bcftools_stats:
   cpus: 4
+happy_benchmark_deepvariant:
+  cpus: 12
+

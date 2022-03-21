@@ -1,0 +1,24 @@
+# temporary storage
+tmpdir: '/scratch'
+
+# deepvariant
+DEEPVARIANT_VERSION: '1.3.0-gpu'  # GPU
+N_SHARDS: 256
+
+ref:
+  shortname: 'ref'
+  fasta: 'reference/reference.fasta'
+  index: 'reference/reference.fasta.fai'
+
+sample: 'HG002'
+
+happy:
+  all:
+    bed: 'resources/HG002_GRCh38_1_22_v4.2.1_benchmark_noinconsistent.bed.gz'
+    vcf: 'resources/HG002_GRCh38_1_22_v4.2.1_benchmark.vcf.gz'
+  cmrg:
+    bed: 'resources/HG002_GRCh38_CMRG_smallvar_v1.00.bed.gz'
+    vcf: 'resources/HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz'
+
+stratifications: 'resources/stratifications/v2.0-GRCh38-stratifications.tsv'
+sdf: 'resources/human_GRCh38_no_alt_analysis_set.sdf'

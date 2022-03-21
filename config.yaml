@@ -7,8 +7,8 @@ N_SHARDS: 256
 
 ref:
   shortname: 'ref'
-  fasta: 'reference/reference.fasta'
-  index: 'reference/reference.fasta.fai'
+  fasta: 'reference/human_GRCh38_no_alt_analysis_set.fasta'
+  index: 'reference/human_GRCh38_no_alt_analysis_set.fasta.fai'
 
 sample: 'HG002'
 
@@ -20,5 +20,5 @@ happy:
     bed: 'resources/HG002_GRCh38_CMRG_smallvar_v1.00.bed.gz'
     vcf: 'resources/HG002_GRCh38_CMRG_smallvar_v1.00.vcf.gz'
 
-stratifications: 'resources/stratifications/v2.0-GRCh38-stratifications.tsv'
-sdf: 'resources/human_GRCh38_no_alt_analysis_set.sdf'
+stratifications: 'reference/stratifications/v2.0-GRCh38-stratifications.tsv'
+sdf: 'reference/human_GRCh38_no_alt_analysis_set.sdf'

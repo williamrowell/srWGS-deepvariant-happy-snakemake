@@ -4,7 +4,7 @@ shards = [f"{x:05}" for x in range(config["N_SHARDS"])]
 rule deepvariant_make_examples:
     input:
         bam="aligned/{condition}.bam",
-        bais="aligned/{condition}.bam.bai",
+        bai="aligned/{condition}.bam.bai",
         reference=config["ref"]["fasta"],
     output:
         tfrecord=temp(
@@ -15,7 +15,8 @@ rule deepvariant_make_examples:
     container:
         f"docker://google/deepvariant:{config['DEEPVARIANT_VERSION']}"
     params:
-        vsc_min_fraction_indels="0.12",
+        vsc_min_fraction_snps="0.05",
+        vsc_min_fraction_indels="0.05",
         shard=lambda wildcards: wildcards.shard,
     message:
         "DeepVariant make_examples {wildcards.shard} for {input.bams}."
@@ -23,18 +24,19 @@ rule deepvariant_make_examples:
         f"""
         (/opt/deepvariant/bin/make_examples \
             --vsc_min_fraction_indels {{params.vsc_min_fraction_indels}} \
+            --vsc_min_fraction_snps {{params.vsc_min_fraction_snps}} \
             --mode calling \
             --ref {{input.reference}} \
             --reads {{input.bam}} \
-            --examples conditions/{{condition}}/deepvariant/examples/examples.tfrecord@{config['N_SHARDS']}.gz \
+            --examples conditions/{{wildcards.condition}}/deepvariant/examples/examples.tfrecord@{config['N_SHARDS']}.gz \
             --task {{wildcards.shard}}) > {{log}} 2>&1
         """
 
 
 rule deepvariant_call_variants_gpu:
     input:
-        expand(
-            f"conditions/{{condition}}/deepvariant/examples/examples.tfrecord-{{shard}}-of-{config['N_SHARDS']:05}.gz",
+        lambda wildcards: expand(
+            f"conditions/{wildcards.condition}/deepvariant/examples/examples.tfrecord-{{shard}}-of-{config['N_SHARDS']:05}.gz",
             shard=shards,
         ),
     output:
@@ -52,10 +54,9 @@ rule deepvariant_call_variants_gpu:
     threads: 8
     shell:
         f"""
-        (echo "CUDA_VISIBLE_DEVICES=" $CUDA_VISIBLE_DEVICES; \
-        /opt/deepvariant/bin/call_variants \
+        (/opt/deepvariant/bin/call_variants \
             --outfile {{output}} \
-            --examples conditions/{condition}/deepvariant/examples/examples.tfrecord@{config['N_SHARDS']}.gz \
+            --examples conditions/{{wildcards.condition}}/deepvariant/examples/examples.tfrecord@{config['N_SHARDS']}.gz \
             --checkpoint {{params.model}}) > {{log}} 2>&1
         """
 

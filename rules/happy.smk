@@ -36,3 +36,4 @@ rule happy_benchmark_deepvariant:
             --stratification {input.strats} \
             {input.bench_vcf} {input.query_vcf}) > {log} 2>&1
         """
+

@@ -18,8 +18,6 @@ rule deepvariant_make_examples:
         vsc_min_fraction_snps="0.05",
         vsc_min_fraction_indels="0.05",
         shard=lambda wildcards: wildcards.shard,
-    message:
-        "DeepVariant make_examples {wildcards.shard} for {input.bams}."
     shell:
         f"""
         (/opt/deepvariant/bin/make_examples \
@@ -49,8 +47,6 @@ rule deepvariant_call_variants_gpu:
         f"docker://google/deepvariant:{config['DEEPVARIANT_VERSION']}"
     params:
         model="/opt/models/wgs/model.ckpt",
-    message:
-        "DeepVariant call_variants for {input}."
     threads: 8
     shell:
         f"""
@@ -73,8 +69,6 @@ rule deepvariant_postprocess_variants:
         "conditions/{condition}/logs/deepvariant/postprocess_variants/{condition}.log",
     container:
         f"docker://google/deepvariant:{config['DEEPVARIANT_VERSION']}"
-    message:
-        "DeepVariant postprocess_variants for {input.tfrecord}."
     threads: 4
     shell:
         f"""
@@ -97,7 +91,6 @@ rule deepvariant_bcftools_stats:
     threads: 4
     conda:
         "envs/bcftools.yaml"
-    message:
-        "Calculating VCF statistics for {input}."
     shell:
         "(bcftools stats --threads 3 {params} {input} > {output}) > {log} 2>&1"
+

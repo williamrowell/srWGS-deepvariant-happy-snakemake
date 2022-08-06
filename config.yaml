@@ -6,7 +6,7 @@ DEEPVARIANT_VERSION: '1.4.0-gpu'  # GPU
 N_SHARDS: 256
 
 ref:
-  shortname: 'ref'
+  shortname: 'GRCh38'
   fasta: 'reference/human_GRCh38_no_alt_analysis_set.fasta'
   index: 'reference/human_GRCh38_no_alt_analysis_set.fasta.fai'
 

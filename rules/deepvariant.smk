@@ -24,6 +24,7 @@ rule deepvariant_make_examples:
             --vsc_min_fraction_indels {{params.vsc_min_fraction_indels}} \
             --vsc_min_fraction_snps {{params.vsc_min_fraction_snps}} \
             --mode calling \
+            --channels insert_size \
             --ref {{input.reference}} \
             --reads {{input.bam}} \
             --examples conditions/{{wildcards.condition}}/deepvariant/examples/examples.tfrecord@{config['N_SHARDS']}.gz \

@@ -12,8 +12,5 @@ deepvariant_call_variants_gpu:
 deepvariant_postprocess_variants:
   cpus: 4
   extra: '--constraint=avx512'
-deepvariant_bcftools_stats:
-  cpus: 4
 happy_benchmark_deepvariant:
   cpus: 12
-

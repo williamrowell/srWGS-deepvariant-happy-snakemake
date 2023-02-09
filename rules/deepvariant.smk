@@ -80,18 +80,18 @@ rule deepvariant_postprocess_variants:
         """
 
 
-rule deepvariant_bcftools_stats:
-    input:
-        "conditions/{condition}/deepvariant/{condition}.deepvariant.vcf.gz",
-    output:
-        "conditions/{condition}/deepvariant/{condition}.deepvariant.vcf.stats.txt",
-    log:
-        "conditions/{condition}/logs/bcftools/stats/{condition}.deepvariant.vcf.log",
-    params:
-        f"--fasta-ref {config['ref']['fasta']} --apply-filters PASS -s {config['sample']}",
-    threads: 4
-    conda:
-        "envs/bcftools.yaml"
-    shell:
-        "(bcftools stats --threads 3 {params} {input} > {output}) > {log} 2>&1"
+# rule deepvariant_bcftools_stats:
+#     input:
+#         "conditions/{condition}/deepvariant/{condition}.deepvariant.vcf.gz",
+#     output:
+#         "conditions/{condition}/deepvariant/{condition}.deepvariant.vcf.stats.txt",
+#     log:
+#         "conditions/{condition}/logs/bcftools/stats/{condition}.deepvariant.vcf.log",
+#     params:
+#         f"--fasta-ref {config['ref']['fasta']} --apply-filters PASS -s {config['sample']}",
+#     threads: 4
+#     conda:
+#         "envs/bcftools.yaml"
+#     shell:
+#         "(bcftools stats --threads 3 {params} {input} > {output}) > {log} 2>&1"
 

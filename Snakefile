@@ -40,7 +40,6 @@ targets.extend(
             "vcf.gz",
             "vcf.gz.tbi",
             "visual_report.html",
-            "vcf.stats.txt",
         ]
     ]
 )
